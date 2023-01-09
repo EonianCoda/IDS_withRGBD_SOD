@@ -272,7 +272,7 @@ class SalObjDataset_test(data.Dataset):
         
         self.images = [os.path.join(val_data_root, 'RGB', f) for f in img_files]
         self.gts = [os.path.join(val_data_root, 'GT', f.replace('.jpg','.png')) for f in img_files]
-        self.depths = [os.path.join(val_data_root, 'depth', f.replace('.jpg','.png')) for f in img_files]
+        self.depths = [os.path.join(val_data_root, 'depth_eq', f.replace('.jpg','.png')) for f in img_files]
        
 
         # for valid_name in valid_list:
@@ -409,6 +409,7 @@ class SalObjDataset_test(data.Dataset):
     
     def __len__(self):
         return self.size
+
 
 
 def get_testloader(val_data_root : str, valid_name_list : str, batchsize, testsize, shuffle=False, num_workers=6, pin_memory=True):

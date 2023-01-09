@@ -209,18 +209,23 @@ def visual(device, work_dir, valid_name, valid_list_len, target):
 
     if valid_list_len == 1:
         checkpoint = torch.load(model_dir + "/{}_best_model.pth".format(target))
-    else:
-        checkpoint = torch.load(model_dir + "/{}_best_model.pth".format(valid_name))
+    # else:
+    #     checkpoint = torch.load(model_dir + "/{}_best_model.pth".format(valid_name))
     
     model.load_state_dict(checkpoint['model_state_dict'])
 
     with Loader("Saving {} dataset images...".format(valid_name)):
-        valid_list = [valid_name]
+        # valid_list = [valid_name]
 
-        val_image_root = os.path.join(config.DATA['data_root'], 'TestDataset')
+        # val_image_root = os.path.join(config.DATA['data_root'], 'TestDataset')
         # test_loader = get_testloader(val_image_root, valid_list, config.TRAIN['batch_size'], 352)
-        test_loader = get_testloader(config.DATA['data_root'],config.DATA['val_name_list'], config.TRAIN['batch_size'], 352)
+        # test_loader = get_testloader(config.DATA['data_root'],config.DATA['test_name_list'], config.TRAIN['batch_size'], 352)
+        # test_loader = get_testloader(config.DATA['inference_root'], config.DATA['test_name_list'], config.TRAIN['batch_size'], 352)
 
+        root = os.path.join(config.DATA['visual_root'], valid_name)
+        test_loader = get_testloader(root, config.DATA['visual_name_list'], config.TRAIN['batch_size'], 352)
+        
+        # print(len(test_loader))
         model.eval()
         with torch.no_grad():
             for _, batch in enumerate(test_loader):
@@ -357,7 +362,7 @@ def visual(device, work_dir, valid_name, valid_list_len, target):
 
                     result = cv2.hconcat([cat_ori, cat_depth, cat_res, cat_gt, ss_mask_pred, ss_mask, depth_ss_mask_pred, depth_ss_mask])
 
-                    valid_name = info[1][b]
+                    # valid_name = info[1][b]
                     name = info[2][b]
 
                     total_dir = os.path.join(work_dir, "result", "total", valid_name)
@@ -372,6 +377,7 @@ def visual(device, work_dir, valid_name, valid_list_len, target):
                     if not os.path.exists(gt_dir):
                         os.makedirs(gt_dir)
 
+                    name = os.path.basename(name)
                     cv2.imwrite(os.path.join(total_dir, name), result)
                     cv2.imwrite(os.path.join(pred_dir, name), cat_res)
                     cv2.imwrite(os.path.join(gt_dir, name), cat_gt)
