@@ -274,25 +274,6 @@ class SalObjDataset_test(data.Dataset):
         self.gts = [os.path.join(val_data_root, 'GT', f.replace('.jpg','.png')) for f in img_files]
         self.depths = [os.path.join(val_data_root, 'depth_eq', f.replace('.jpg','.png')) for f in img_files]
        
-
-        # for valid_name in valid_list:
-            
-            
-
-
-        #     image_root = os.path.join(val_image_root, valid_name, "RGB") + "/"
-        #     gt_root = os.path.join(val_image_root, valid_name, "GT") + "/"
-        #     depth_root = os.path.join(val_image_root, valid_name, "depth") + "/"
-
-        #     new_images = [image_root + f for f in os.listdir(image_root) if f.endswith('.jpg')]
-        #     new_gts = [gt_root + f for f in os.listdir(gt_root) if f.endswith('.jpg') or f.endswith('.png')]
-        #     new_depths = [depth_root + f for f in os.listdir(depth_root) if f.endswith('.bmp') or f.endswith('.png')]
-
-        #     for i in range(len(new_images)):
-        #         self.images.append(new_images[i])
-        #         self.gts.append(new_gts[i])
-        #         self.depths.append(new_depths[i])
-        
         self.images = sorted(self.images)
         self.gts = sorted(self.gts)
         self.depths = sorted(self.depths)

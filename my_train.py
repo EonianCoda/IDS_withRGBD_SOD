@@ -13,18 +13,18 @@ import config
 from logger import *
 
 import torch
-import argparse
-
-
-parser = argparse.ArgumentParser()
-parser.add_argument('--weight', default=None)
-
-parser.parse_args()
-# torch.backends.cudnn.benchmark = True
+torch.backends.cudnn.benchmark = True
 
 os.environ["CUDA_VISIBLE_DEVICES"] = config.TRAIN['GPU']
 
+# valid_list = (config.DATA['val_dataset']).replace(",", "").split(" ")
+# test_list = (config.DATA['test_dataset']).replace(",", "").split(" ")
+
 best_mae = 1
+# best_mae = {i:[] for i in list(range(len(valid_list)))}
+# for i in range(len(best_mae)):
+#     best_mae[i] = 1
+
 
 def train(epoch, trainloader, optimizer, model, device, scheduler):
     model.train()
@@ -381,6 +381,7 @@ def visual(device, work_dir, valid_name, valid_list_len, target):
                     cv2.imwrite(os.path.join(total_dir, name), result)
                     cv2.imwrite(os.path.join(pred_dir, name), cat_res)
                     cv2.imwrite(os.path.join(gt_dir, name), cat_gt)
+
 
 def main():
     work_dir = make_new_work_space()
